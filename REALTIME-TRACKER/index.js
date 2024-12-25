@@ -6,7 +6,11 @@ const socketio = require("socket.io");
 
 const app = express();
 const PORT = 4000;
+
 app.use(cors({origin:"*"}));
+app.set("views", path.join(__dirname, "./views")); 
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "./public")));
 
 const server = http.createServer(app);
 const io = socketio(server, { cors: { origin: "*" } });
@@ -20,8 +24,6 @@ io.on("connection", (socket) => {
     });
 });
 
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
     res.render("index");
