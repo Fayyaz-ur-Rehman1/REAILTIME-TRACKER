@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const http = require("http");
 const path = require("path");
@@ -5,9 +6,10 @@ const socketio = require("socket.io");
 
 const app = express();
 const PORT = 4000;
+app.use(cors({origin:"*"}));
 
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
     socket.on("send-location", (data) => {
